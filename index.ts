@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { Client, Collection, Events, GatewayIntentBits, MessageFlags } from 'discord.js';
 import { env } from './lib/env';
 import ping from './commands/utility/ping';
+import chalk from 'chalk';
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -37,7 +38,7 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 client.once(Events.ClientReady, readyClient => {
-    console.log(`NO WITAM WITAM ${readyClient.user.tag}`);
+    console.log(chalk.green(`NO WITAM WITAM ${readyClient.user.tag}`));
 });
 
 client.login(env.TOKEN);
