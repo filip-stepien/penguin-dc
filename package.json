@@ -1,0 +1,20 @@
+{
+  "name": "pingwinbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsx index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "discord.js": "^14.22.1",
+    "tsx": "^4.20.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "dotenv": "^17.2.2",
+    "eslint": "^9.36.0"
+  }
+}
