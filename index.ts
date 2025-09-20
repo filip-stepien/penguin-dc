@@ -1,10 +1,8 @@
-// Require the necessary discord.js classes
-import { Client, Collection, Events, GatewayIntentBits, MessageFlags } from 'discord.js';
 import 'dotenv/config';
-import ping from './commands/utility/ping';
+import { Client, Collection, Events, GatewayIntentBits, MessageFlags } from 'discord.js';
 import { env } from './lib/env';
+import ping from './commands/utility/ping';
 
-// Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
@@ -38,12 +36,8 @@ client.on(Events.InteractionCreate, async interaction => {
     }
 });
 
-// When the client is ready, run this code (only once).
-// The distinction between `client: Client<boolean>` and `readyClient: Client<true>` is important for TypeScript developers.
-// It makes some properties non-nullable.
 client.once(Events.ClientReady, readyClient => {
     console.log(`NO WITAM WITAM ${readyClient.user.tag}`);
 });
 
-// Log in to Discord with your client's token
 client.login(env.TOKEN);
