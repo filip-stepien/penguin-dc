@@ -1,9 +1,8 @@
 // Require the necessary discord.js classes
-import  fs  from 'node:fs';
-import  path  from 'node:path';
 import { Client, Collection, Events, GatewayIntentBits, MessageFlags } from 'discord.js';
 import 'dotenv/config';
 import ping from './commands/utility/ping';
+import { env } from './lib/env';
 
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -12,25 +11,31 @@ client.commands = new Collection();
 client.commands.set(ping.data.name, ping);
 
 client.on(Events.InteractionCreate, async interaction => {
-	if (!interaction.isChatInputCommand()) return;
+    if (!interaction.isChatInputCommand()) return;
 
-	const command = interaction.client.commands.get(interaction.commandName);
+    const command = interaction.client.commands.get(interaction.commandName);
 
-	if (!command) {
-		console.error(`No command matching ${interaction.commandName} was found.`);
-		return;
-	}
+    if (!command) {
+        console.error(`No command matching ${interaction.commandName} was found.`);
+        return;
+    }
 
-	try {
-		await command.execute(interaction);
-	} catch (error) {
-		console.error(error);
-		if (interaction.replied || interaction.deferred) {
-			await interaction.followUp({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
-		} else {
-			await interaction.reply({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
-		}
-	}
+    try {
+        await command.execute(interaction);
+    } catch (error) {
+        console.error(error);
+        if (interaction.replied || interaction.deferred) {
+            await interaction.followUp({
+                content: 'There was an error while executing this command!',
+                flags: MessageFlags.Ephemeral
+            });
+        } else {
+            await interaction.reply({
+                content: 'There was an error while executing this command!',
+                flags: MessageFlags.Ephemeral
+            });
+        }
+    }
 });
 
 // When the client is ready, run this code (only once).
@@ -41,4 +46,4 @@ client.once(Events.ClientReady, readyClient => {
 });
 
 // Log in to Discord with your client's token
-client.login(process.env.TOKEN);
+client.login(env.TOKEN);
