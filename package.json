@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
-        "start": "tsx index.ts"
+        "start": "tsx index.ts",
+        "deploy": "tsx deploy-commands.ts"
     },
     "author": "",
     "license": "ISC",
