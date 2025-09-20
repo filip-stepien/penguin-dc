@@ -1,13 +1,15 @@
-import 'dotenv/config';
+// Require the necessary discord.js classes
 import { Client, Collection, Events, GatewayIntentBits, MessageFlags } from 'discord.js';
-import { env } from './lib/env';
-import ping from './commands/utility/ping';
-import chalk from 'chalk';
+import 'dotenv/config';
+import commands from './commands';
 
+// Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
-client.commands.set(ping.data.name, ping);
+for (const command of commands) {
+    client.commands.set(command.data.name, command);
+}
 
 client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isChatInputCommand()) return;
@@ -37,8 +39,12 @@ client.on(Events.InteractionCreate, async interaction => {
     }
 });
 
+// When the client is ready, run this code (only once).
+// The distinction between `client: Client<boolean>` and `readyClient: Client<true>` is important for TypeScript developers.
+// It makes some properties non-nullable.
 client.once(Events.ClientReady, readyClient => {
-    console.log(chalk.green(`NO WITAM WITAM ${readyClient.user.tag}`));
+    console.log(`NO WITAM WITAM ${readyClient.user.tag}`);
 });
 
-client.login(env.TOKEN);
+// Log in to Discord with your client's token
+client.login(process.env.TOKEN);

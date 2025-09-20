@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
-        "start": "tsx index.ts",
+        "start": "tsx bot.ts",
         "deploy": "tsx deploy-commands.ts",
         "lint": "eslint .",
         "pretty": "prettier --write ."
